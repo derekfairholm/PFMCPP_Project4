@@ -33,7 +33,68 @@
  */
 
 #include <iostream>
+
+struct FloatType
+{
+    float add(float lhs, float rhs) { return lhs + rhs; }
+    float subtract(float lhs, float rhs) { return lhs - rhs; }
+    float multiply(float lhs, float rhs) { return lhs * rhs; }
+    float divide(float lhs, float rhs) { return lhs / rhs; }
+};
+
+struct DoubleType
+{
+    double add(double lhs, double rhs) { return lhs + rhs; }
+    double subtract(double lhs, double rhs) { return lhs - rhs; }
+    double multiply(double lhs, double rhs) { return lhs * rhs; }
+    double divide(double lhs, double rhs) { return lhs / rhs; }
+};
+
+struct IntType
+{
+    int add(int lhs, int rhs) { return lhs + rhs; }
+    int subtract(int lhs, int rhs) { return lhs - rhs; }
+    int multiply(int lhs, int rhs) { return lhs * rhs; }
+    int divide(int lhs, int rhs) { return lhs / rhs; }
+};
+
 int main()
 {
-    std::cout << "good to go!" << std::endl;
+    std::cout << "------------------------------Float Type------------------------------" << std::endl;
+
+    FloatType ft;
+    float floatResult = ft.add(2.f, 3.2f);    
+    std::cout << "ft.add(): " << floatResult << std::endl;
+    floatResult = ft.subtract(8.1f, 4.5f);
+    std::cout << "ft.subtract(): " << floatResult << std::endl;
+    floatResult = ft.multiply(12.2f, 3.f);
+    std::cout << "ft.multiply(): " << floatResult << std::endl;
+    floatResult = ft.divide(2.8f, 3.24f);
+    std::cout << "ft.divide(): " << floatResult << std::endl;
+
+    std::cout << "------------------------------Double Type------------------------------" << std::endl;
+
+    DoubleType dt;
+    double doubleResult = dt.add(2.0, 3.2);    
+    std::cout << "dt.add(): " << doubleResult << std::endl;
+    doubleResult = dt.subtract(8.1, 4.5);
+    std::cout << "dt.subtract(): " << doubleResult << std::endl;
+    doubleResult = dt.multiply(12.2, 3.0);
+    std::cout << "dt.multiply(): " << doubleResult << std::endl;
+    doubleResult = dt.divide(2.8, 3.24);
+    std::cout << "dt.divide(): " << doubleResult << std::endl;
+
+    std::cout << "------------------------------Int Type------------------------------" << std::endl;
+
+    IntType it;
+    int intResult = it.add(2, 3);    
+    std::cout << "it.add(): " << intResult << std::endl;
+    intResult = it.subtract(8, 4);
+    std::cout << "it.subtract(): " << intResult << std::endl;
+    intResult = it.multiply(12, 3);
+    std::cout << "it.multiply(): " << intResult << std::endl;
+    intResult = it.divide(2, 3);
+    std::cout << "it.divide(): " << intResult << std::endl;
 }
+
+
