@@ -55,7 +55,11 @@ struct IntType
     int add(int lhs, int rhs) { return lhs + rhs; }
     int subtract(int lhs, int rhs) { return lhs - rhs; }
     int multiply(int lhs, int rhs) { return lhs * rhs; }
-    int divide(int lhs, int rhs) { return lhs / rhs; }
+    int divide(int lhs, int rhs) 
+    { 
+        if(rhs == 0) { return 0; }
+        return lhs / rhs; 
+    }
 };
 
 int main()
@@ -69,7 +73,7 @@ int main()
     std::cout << "ft.subtract(): " << floatResult << std::endl;
     floatResult = ft.multiply(12.2f, 3.f);
     std::cout << "ft.multiply(): " << floatResult << std::endl;
-    floatResult = ft.divide(2.8f, 3.24f);
+    floatResult = ft.divide(2.8f, 0);
     std::cout << "ft.divide(): " << floatResult << std::endl;
 
     std::cout << "------------------------------Double Type------------------------------" << std::endl;
@@ -81,7 +85,7 @@ int main()
     std::cout << "dt.subtract(): " << doubleResult << std::endl;
     doubleResult = dt.multiply(12.2, 3.0);
     std::cout << "dt.multiply(): " << doubleResult << std::endl;
-    doubleResult = dt.divide(2.8, 3.24);
+    doubleResult = dt.divide(2.8, 0);
     std::cout << "dt.divide(): " << doubleResult << std::endl;
 
     std::cout << "------------------------------Int Type------------------------------" << std::endl;
@@ -93,7 +97,7 @@ int main()
     std::cout << "it.subtract(): " << intResult << std::endl;
     intResult = it.multiply(12, 3);
     std::cout << "it.multiply(): " << intResult << std::endl;
-    intResult = it.divide(2, 3);
+    intResult = it.divide(2, 0);
     std::cout << "it.divide(): " << intResult << std::endl;
 }
 
