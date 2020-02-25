@@ -86,10 +86,26 @@ struct FloatType
         heapFloat = nullptr;
     }
 
-    float add(float lhs, float rhs) { return lhs + rhs; }
-    float subtract(float lhs, float rhs) { return lhs - rhs; }
-    float multiply(float lhs, float rhs) { return lhs * rhs; }
-    float divide(float lhs, float rhs) { return lhs / rhs; }
+    FloatType& add(float lhs, float rhs) 
+    { 
+        *heapFloat = lhs + rhs;
+        return *this; 
+    }
+    FloatType& subtract(float lhs, float rhs) 
+    { 
+        *heapFloat = lhs - rhs;
+        return *this; 
+    }
+    FloatType& multiply(float lhs, float rhs) 
+    { 
+        *heapFloat = lhs * rhs;
+        return *this; 
+    }
+    FloatType& divide(float lhs, float rhs) 
+    { 
+        *heapFloat = lhs / rhs;
+        return *this; 
+    }
 };
 
 struct DoubleType
@@ -103,10 +119,26 @@ struct DoubleType
         heapDouble = nullptr;
     }
 
-    double add(double lhs, double rhs) { return lhs + rhs; }
-    double subtract(double lhs, double rhs) { return lhs - rhs; }
-    double multiply(double lhs, double rhs) { return lhs * rhs; }
-    double divide(double lhs, double rhs) { return lhs / rhs; }
+    DoubleType& add(double lhs, double rhs) 
+    { 
+        *heapDouble = lhs + rhs; 
+        return *this; 
+    }
+    DoubleType& subtract(double lhs, double rhs) 
+    { 
+        *heapDouble = lhs - rhs; 
+        return *this; 
+    }
+    DoubleType& multiply(double lhs, double rhs) 
+    { 
+        *heapDouble = lhs * rhs; 
+        return *this; 
+    }
+    DoubleType& divide(double lhs, double rhs) 
+    { 
+        *heapDouble = lhs / rhs; 
+        return *this; 
+    }
 };
 
 struct IntType
@@ -120,13 +152,26 @@ struct IntType
         heapInt = nullptr;
     }
 
-    int add(int lhs, int rhs) { return lhs + rhs; }
-    int subtract(int lhs, int rhs) { return lhs - rhs; }
-    int multiply(int lhs, int rhs) { return lhs * rhs; }
-    int divide(int lhs, int rhs) 
+    IntType& add(int lhs, int rhs) 
     { 
-        if(rhs == 0) { return 0; }
-        return lhs / rhs; 
+        *heapInt = lhs + rhs; 
+        return *this; 
+    }
+    IntType& subtract(int lhs, int rhs) 
+    { 
+        *heapInt = lhs - rhs; 
+        return *this; 
+    }
+    IntType& multiply(int lhs, int rhs) 
+    { 
+        *heapInt = lhs * rhs; 
+        return *this; 
+    }
+    IntType& divide(int lhs, int rhs) 
+    { 
+        if(rhs == 0) { *heapInt = 0; }
+        *heapInt = lhs / rhs; 
+        return *this;
     }
 };
 
