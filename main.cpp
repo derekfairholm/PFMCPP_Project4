@@ -77,6 +77,15 @@ send me a DM to check your pull request
 
 struct FloatType
 {
+    float* heapFloat = nullptr;
+
+    FloatType(float f) : heapFloat(new float(f)) { }
+    ~FloatType()
+    {
+        delete heapFloat;
+        heapFloat = nullptr;
+    }
+
     float add(float lhs, float rhs) { return lhs + rhs; }
     float subtract(float lhs, float rhs) { return lhs - rhs; }
     float multiply(float lhs, float rhs) { return lhs * rhs; }
@@ -85,6 +94,15 @@ struct FloatType
 
 struct DoubleType
 {
+    double* heapDouble = nullptr;
+
+    DoubleType(double d) : heapDouble(new double(d)) { }
+    ~DoubleType()
+    {
+        delete heapDouble;
+        heapDouble = nullptr;
+    }
+
     double add(double lhs, double rhs) { return lhs + rhs; }
     double subtract(double lhs, double rhs) { return lhs - rhs; }
     double multiply(double lhs, double rhs) { return lhs * rhs; }
@@ -93,6 +111,15 @@ struct DoubleType
 
 struct IntType
 {
+    int* heapInt = new int;
+
+    IntType(int i) : heapInt(new int(i)) { }
+    ~IntType()
+    {
+        delete heapInt;
+        heapInt = nullptr;
+    }
+
     int add(int lhs, int rhs) { return lhs + rhs; }
     int subtract(int lhs, int rhs) { return lhs - rhs; }
     int multiply(int lhs, int rhs) { return lhs * rhs; }
@@ -105,6 +132,7 @@ struct IntType
 
 int main()
 {
+    /*
     std::cout << "------------------------------Float Type------------------------------" << std::endl;
 
     FloatType ft;
@@ -140,6 +168,9 @@ int main()
     std::cout << "it.multiply(): " << intResult << std::endl;
     intResult = it.divide(2, 0);
     std::cout << "it.divide(): " << intResult << std::endl;
+    */
+
+    std::cout << "good to go" << std::endl;
 }
 
 
