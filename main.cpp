@@ -349,8 +349,13 @@ IntType& IntType::multiply(const DoubleType& dt)
 }
 IntType& IntType::divide(const DoubleType& dt) 
 {
-    if(*dt.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
-    *value /= int(*dt.value);
+    if(*dt.value == 0) 
+    { 
+        std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; 
+    } else 
+    {
+        *value /= int(*dt.value);
+    }
     return *this;
 }
 
@@ -373,8 +378,13 @@ IntType& IntType::multiply(const FloatType& ft)
 }
 IntType& IntType::divide(const FloatType& ft)
 {
-    if(*ft.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
-    *value /= int(*ft.value);
+    if(*ft.value == 0) 
+    { 
+        std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; 
+    } else 
+    {
+        *value /= int(*ft.value);
+    }
     return *this;
 }
 
