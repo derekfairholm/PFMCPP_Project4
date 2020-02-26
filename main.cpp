@@ -107,7 +107,8 @@ struct FloatType
     }
     FloatType& divide(float f) 
     { 
-        *value /= f; FIXME a warning would be nice if the rhs is 0
+        if(f == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+        *value /= f;
         return *this; 
     }
 
@@ -154,7 +155,8 @@ struct DoubleType
     }
     DoubleType& divide(double d) 
     { 
-        *value /= d; FIXME a warning would be nice if the rhs is 0
+        if(d == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+        *value /= d; 
         return *this; 
     }
 
@@ -201,8 +203,13 @@ struct IntType
     }
     IntType& divide(int i) 
     { 
-        if(i == 0) { *value = 0; } FIXME add warning, don't change value.
-        *value /= i; and dont divide if i is zero.  you're still dividing.
+        if(i == 0) 
+        { 
+            std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl;
+        } else 
+        {
+            *value /= i; 
+        }
         return *this;
     }
 
@@ -242,7 +249,8 @@ FloatType& FloatType::multiply(const IntType& it)
 }
 FloatType& FloatType::divide(const IntType& it) 
 {
-    *value /= float(*it.value); FIXME a warning would be nice if the rhs is 0
+    if(*it.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+    *value /= float(*it.value); 
     return *this;
 }
 
@@ -265,7 +273,8 @@ FloatType& FloatType::multiply(const DoubleType& dt)
 }
 FloatType& FloatType::divide(const DoubleType& dt)
 {
-    *value /= float(*dt.value); FIXME a warning would be nice if the rhs is 0
+    if(*dt.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+    *value /= float(*dt.value);
     return *this;
 }
 
@@ -290,7 +299,8 @@ DoubleType& DoubleType::multiply(const IntType& it)
 }
 DoubleType& DoubleType::divide(const IntType& it) 
 {
-    *value /= double(*it.value); FIXME a warning would be nice if the rhs is 0
+    if(*it.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+    *value /= double(*it.value);
     return *this;
 }
 
@@ -313,7 +323,8 @@ DoubleType& DoubleType::multiply(const FloatType& ft)
 }
 DoubleType& DoubleType::divide(const FloatType& ft)
 {
-    *value /= double(*ft.value); FIXME a warning would be nice if the rhs is 0
+    if(*ft.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+    *value /= double(*ft.value);
     return *this;
 }
 
@@ -338,7 +349,8 @@ IntType& IntType::multiply(const DoubleType& dt)
 }
 IntType& IntType::divide(const DoubleType& dt) 
 {
-    *value /= int(*dt.value); FIXME a warning would be nice if the rhs is 0
+    if(*dt.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+    *value /= int(*dt.value);
     return *this;
 }
 
@@ -361,7 +373,8 @@ IntType& IntType::multiply(const FloatType& ft)
 }
 IntType& IntType::divide(const FloatType& ft)
 {
-    *value /= int(*ft.value); FIXME a warning would be nice if the rhs is 0
+    if(*ft.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
+    *value /= int(*ft.value);
     return *this;
 }
 
