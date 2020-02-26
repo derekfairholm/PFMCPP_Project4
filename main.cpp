@@ -137,24 +137,24 @@ struct DoubleType
         value = nullptr;
     }
 
-    DoubleType& add(double lhs, double rhs) 
+    DoubleType& add(double d) 
     { 
-        *value = lhs + rhs; 
+        *value += d; 
         return *this; 
     }
-    DoubleType& subtract(double lhs, double rhs) 
+    DoubleType& subtract(double d) 
     { 
-        *value = lhs - rhs; 
+        *value -= d; 
         return *this; 
     }
-    DoubleType& multiply(double lhs, double rhs) 
+    DoubleType& multiply(double d) 
     { 
-        *value = lhs * rhs; 
+        *value *= d; 
         return *this; 
     }
-    DoubleType& divide(double lhs, double rhs) 
+    DoubleType& divide(double d) 
     { 
-        *value = lhs / rhs; 
+        *value /= d; 
         return *this; 
     }
 
@@ -184,25 +184,25 @@ struct IntType
         value = nullptr;
     }
 
-    IntType& add(int lhs, int rhs) 
+    IntType& add(int i) 
     { 
-        *value = lhs + rhs; 
+        *value += i; 
         return *this; 
     }
-    IntType& subtract(int lhs, int rhs) 
+    IntType& subtract(int i) 
     { 
-        *value = lhs - rhs; 
+        *value -= i;
         return *this; 
     }
-    IntType& multiply(int lhs, int rhs) 
+    IntType& multiply(int i) 
     { 
-        *value = lhs * rhs; 
+        *value *= i; 
         return *this; 
     }
-    IntType& divide(int lhs, int rhs) 
+    IntType& divide(int i) 
     { 
-        if(rhs == 0) { *value = 0; }
-        *value = lhs / rhs; 
+        if(i == 0) { *value = 0; }
+        *value /= i; 
         return *this;
     }
 
@@ -367,43 +367,33 @@ IntType& IntType::divide(const FloatType& ft)
 
 int main()
 {
-    /*
+    std::cout << std::endl;
     std::cout << "------------------------------Float Type------------------------------" << std::endl;
+    FloatType ft(3.1f);
+    IntType it(4);
+    DoubleType dt(8.2);
 
-    FloatType ft;
-    float floatResult = ft.add(2.f, 3.2f);    
-    std::cout << "ft.add(): " << floatResult << std::endl;
-    floatResult = ft.subtract(8.1f, 4.5f);
-    std::cout << "ft.subtract(): " << floatResult << std::endl;
-    floatResult = ft.multiply(12.2f, 3.f);
-    std::cout << "ft.multiply(): " << floatResult << std::endl;
-    floatResult = ft.divide(2.8f, 0);
-    std::cout << "ft.divide(): " << floatResult << std::endl;
+    std::cout << std::endl;
+    std::cout << "ft: multiplying by 5.f, adding 4.2f, subtracting dt, and dividing by it results in " << *ft.multiply(5.f).add(4.2f).subtract(dt).divide(it).value << std::endl;
+    std::cout << std::endl;
 
     std::cout << "------------------------------Double Type------------------------------" << std::endl;
+    DoubleType dt2(11.6);
+    FloatType ft2(5.f);
+    IntType it2(7);
 
-    DoubleType dt;
-    double doubleResult = dt.add(2.0, 3.2);    
-    std::cout << "dt.add(): " << doubleResult << std::endl;
-    doubleResult = dt.subtract(8.1, 4.5);
-    std::cout << "dt.subtract(): " << doubleResult << std::endl;
-    doubleResult = dt.multiply(12.2, 3.0);
-    std::cout << "dt.multiply(): " << doubleResult << std::endl;
-    doubleResult = dt.divide(2.8, 0);
-    std::cout << "dt.divide(): " << doubleResult << std::endl;
+    std::cout << std::endl;
+    std::cout << "dt2: dividing by 2.1, multiplying by 9.4, addding ft2, and dividing by it2 results in  " << *dt2.divide(2.1).multiply(9.4).add(ft2).divide(it2).value << std::endl;
+    std::cout << std::endl;
 
     std::cout << "------------------------------Int Type------------------------------" << std::endl;
+    IntType it3(85);
+    DoubleType dt3(52.43);
+    FloatType ft3(42.1f);
 
-    IntType it;
-    int intResult = it.add(2, 3);    
-    std::cout << "it.add(): " << intResult << std::endl;
-    intResult = it.subtract(8, 4);
-    std::cout << "it.subtract(): " << intResult << std::endl;
-    intResult = it.multiply(12, 3);
-    std::cout << "it.multiply(): " << intResult << std::endl;
-    intResult = it.divide(2, 0);
-    std::cout << "it.divide(): " << intResult << std::endl;
-    */
+    std::cout << std::endl;
+    std::cout << "it3: subtracting 5, dividing by 2, multiplying by dt3, and multiplying again by ft3 results in  " << *it3.subtract(5).divide(2).multiply(dt3).multiply(ft3).value << std::endl;
+    std::cout << std::endl;
 
     std::cout << "good to go" << std::endl;
 }
