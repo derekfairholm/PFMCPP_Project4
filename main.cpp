@@ -233,163 +233,49 @@ struct IntType
 
 // add/subtract/multiply/divide IntType 
 
-FloatType& FloatType::add(const IntType& it) 
-{
-    *value += float(*it.value);
-    return *this;
-}
-FloatType& FloatType::subtract(const IntType& it) 
-{
-    *value -= float(*it.value);
-    return *this;
-}
-FloatType& FloatType::multiply(const IntType& it) 
-{
-    *value *= float(*it.value);
-    return *this;
-}
-FloatType& FloatType::divide(const IntType& it) 
-{
-    if(*it.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
-    *value /= float(*it.value); 
-    return *this;
-}
+FloatType& FloatType::add(const IntType& it) { return add(*it.value); }
+FloatType& FloatType::subtract(const IntType& it) { return subtract(*it.value); }
+FloatType& FloatType::multiply(const IntType& it) { return multiply(*it.value); }
+FloatType& FloatType::divide(const IntType& it) { return divide(*it.value); }
 
 // add/subtract/multiply/divide DoubleType 
 
-FloatType& FloatType::add(const DoubleType& dt) 
-{
-    *value += float(*dt.value);
-    return *this;
-}
-FloatType& FloatType::subtract(const DoubleType& dt)
-{
-    *value -= float(*dt.value);
-    return *this;
-}
-FloatType& FloatType::multiply(const DoubleType& dt)
-{
-    *value *= float(*dt.value);
-    return *this;
-}
-FloatType& FloatType::divide(const DoubleType& dt)
-{
-    if(*dt.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
-    *value /= float(*dt.value);
-    return *this;
-}
+FloatType& FloatType::add(const DoubleType& dt) { return add(*dt.value); }
+FloatType& FloatType::subtract(const DoubleType& dt) { return subtract(*dt.value); }
+FloatType& FloatType::multiply(const DoubleType& dt) { return multiply(*dt.value); }
+FloatType& FloatType::divide(const DoubleType& dt) { return divide(*dt.value); }
 
 //////// DoubleType UDT math
 
 // add/subtract/multiply/divide IntType 
 
-DoubleType& DoubleType::add(const IntType& it) 
-{
-    *value += double(*it.value);
-    return *this;
-}
-DoubleType& DoubleType::subtract(const IntType& it) 
-{
-    *value -= double(*it.value);
-    return *this;
-}
-DoubleType& DoubleType::multiply(const IntType& it) 
-{
-    *value *= double(*it.value);
-    return *this;
-}
-DoubleType& DoubleType::divide(const IntType& it) 
-{
-    if(*it.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
-    *value /= double(*it.value);
-    return *this;
-}
+DoubleType& DoubleType::add(const IntType& it) { return add(*it.value); }
+DoubleType& DoubleType::subtract(const IntType& it) { return subtract(*it.value); }
+DoubleType& DoubleType::multiply(const IntType& it) { return multiply(*it.value); }
+DoubleType& DoubleType::divide(const IntType& it) { return divide(*it.value); }
 
 // add/subtract/multiply/divide FloatType 
 
-DoubleType& DoubleType::add(const FloatType& ft) 
-{
-    *value += double(*ft.value);
-    return *this;
-}
-DoubleType& DoubleType::subtract(const FloatType& ft)
-{
-    *value -= double(*ft.value);
-    return *this;
-}
-DoubleType& DoubleType::multiply(const FloatType& ft)
-{
-    *value *= double(*ft.value);
-    return *this;
-}
-DoubleType& DoubleType::divide(const FloatType& ft)
-{
-    if(*ft.value == 0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
-    *value /= double(*ft.value);
-    return *this;
-}
+DoubleType& DoubleType::add(const FloatType& ft){ return add(*ft.value); }
+DoubleType& DoubleType::subtract(const FloatType& ft){ return subtract(*ft.value); }
+DoubleType& DoubleType::multiply(const FloatType& ft){ return multiply(*ft.value); }
+DoubleType& DoubleType::divide(const FloatType& ft){ return divide(*ft.value); }
 
 //////// IntType UDT math
 
 // add/subtract/multiply/divide DoubleType 
 
-IntType& IntType::add(const DoubleType& dt) 
-{
-    *value += int(*dt.value);
-    return *this;
-}
-IntType& IntType::subtract(const DoubleType& dt) 
-{
-    *value -= int(*dt.value);
-    return *this;
-}
-IntType& IntType::multiply(const DoubleType& dt) 
-{
-    *value *= int(*dt.value);
-    return *this;
-}
-IntType& IntType::divide(const DoubleType& dt) 
-{
-    if(*dt.value == 0) 
-    { 
-        std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; 
-    } 
-    else 
-    {
-        *value /= int(*dt.value);
-    }
-    return *this;
-}
+IntType& IntType::add(const DoubleType& dt) { return add(*dt.value); }
+IntType& IntType::subtract(const DoubleType& dt){ return subtract(*dt.value); }
+IntType& IntType::multiply(const DoubleType& dt){ return multiply(*dt.value); }
+IntType& IntType::divide(const DoubleType& dt) { return divide(*dt.value); }
 
 // add/subtract/multiply/divide FloatType 
 
-IntType& IntType::add(const FloatType& ft) 
-{
-    *value += int(*ft.value);
-    return *this;
-}
-IntType& IntType::subtract(const FloatType& ft)
-{
-    *value -= int(*ft.value);
-    return *this;
-}
-IntType& IntType::multiply(const FloatType& ft)
-{
-    *value *= int(*ft.value);
-    return *this;
-}
-IntType& IntType::divide(const FloatType& ft)
-{
-    if(*ft.value == 0) 
-    { 
-        std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; 
-    } 
-    else 
-    {
-        *value /= int(*ft.value);
-    }
-    return *this;
-}
+IntType& IntType::add(const FloatType& ft) { return add(*ft.value); }
+IntType& IntType::subtract(const FloatType& ft) { return subtract(*ft.value); }
+IntType& IntType::multiply(const FloatType& ft) { return multiply(*ft.value); }
+IntType& IntType::divide(const FloatType& ft) { return divide(*ft.value); }
 
 int main()
 {
