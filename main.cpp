@@ -107,7 +107,7 @@ struct FloatType
     }
     FloatType& divide(float f) 
     { 
-        *value /= f;
+        *value /= f; FIXME a warning would be nice if the rhs is 0
         return *this; 
     }
 
@@ -154,7 +154,7 @@ struct DoubleType
     }
     DoubleType& divide(double d) 
     { 
-        *value /= d; 
+        *value /= d; FIXME a warning would be nice if the rhs is 0
         return *this; 
     }
 
@@ -201,8 +201,8 @@ struct IntType
     }
     IntType& divide(int i) 
     { 
-        if(i == 0) { *value = 0; }
-        *value /= i; 
+        if(i == 0) { *value = 0; } FIXME add warning, don't change value.
+        *value /= i; and dont divide if i is zero.  you're still dividing.
         return *this;
     }
 
@@ -242,7 +242,7 @@ FloatType& FloatType::multiply(const IntType& it)
 }
 FloatType& FloatType::divide(const IntType& it) 
 {
-    *value /= float(*it.value);
+    *value /= float(*it.value); FIXME a warning would be nice if the rhs is 0
     return *this;
 }
 
@@ -265,7 +265,7 @@ FloatType& FloatType::multiply(const DoubleType& dt)
 }
 FloatType& FloatType::divide(const DoubleType& dt)
 {
-    *value /= float(*dt.value);
+    *value /= float(*dt.value); FIXME a warning would be nice if the rhs is 0
     return *this;
 }
 
@@ -290,7 +290,7 @@ DoubleType& DoubleType::multiply(const IntType& it)
 }
 DoubleType& DoubleType::divide(const IntType& it) 
 {
-    *value /= double(*it.value);
+    *value /= double(*it.value); FIXME a warning would be nice if the rhs is 0
     return *this;
 }
 
@@ -313,7 +313,7 @@ DoubleType& DoubleType::multiply(const FloatType& ft)
 }
 DoubleType& DoubleType::divide(const FloatType& ft)
 {
-    *value /= double(*ft.value);
+    *value /= double(*ft.value); FIXME a warning would be nice if the rhs is 0
     return *this;
 }
 
@@ -338,7 +338,7 @@ IntType& IntType::multiply(const DoubleType& dt)
 }
 IntType& IntType::divide(const DoubleType& dt) 
 {
-    *value /= int(*dt.value);
+    *value /= int(*dt.value); FIXME a warning would be nice if the rhs is 0
     return *this;
 }
 
@@ -361,7 +361,7 @@ IntType& IntType::multiply(const FloatType& ft)
 }
 IntType& IntType::divide(const FloatType& ft)
 {
-    *value /= int(*ft.value);
+    *value /= int(*ft.value); FIXME a warning would be nice if the rhs is 0
     return *this;
 }
 
@@ -394,6 +394,10 @@ int main()
     std::cout << std::endl;
     std::cout << "it3: subtracting 5, dividing by 2, multiplying by dt3, and multiplying again by ft3 results in  " << *it3.subtract(5).divide(2).multiply(dt3).multiply(ft3).value << std::endl;
     std::cout << std::endl;
+
+    it.divide(0);
+    dt.divide(0);
+    ft.divide(0);
 
     std::cout << "good to go" << std::endl;
 }
