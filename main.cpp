@@ -206,7 +206,8 @@ struct IntType
         if(i == 0) 
         { 
             std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl;
-        } else 
+        } 
+        else 
         {
             *value /= i; 
         }
@@ -352,7 +353,8 @@ IntType& IntType::divide(const DoubleType& dt)
     if(*dt.value == 0) 
     { 
         std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; 
-    } else 
+    } 
+    else 
     {
         *value /= int(*dt.value);
     }
@@ -381,7 +383,8 @@ IntType& IntType::divide(const FloatType& ft)
     if(*ft.value == 0) 
     { 
         std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; 
-    } else 
+    } 
+    else 
     {
         *value /= int(*ft.value);
     }
