@@ -61,7 +61,7 @@ struct FloatType
     FloatType& divide(float f);
 
     // Not sure how to handle the potential 'else' case here
-    operator float() { if(value) return *value; }
+    operator float() { return *value; }
 
 private:
 
@@ -105,7 +105,7 @@ struct DoubleType
     DoubleType& multiply(double d);
     DoubleType& divide(double d);
 
-    operator double() { if(value) return *value; }
+    operator double() { return *value; }
 
 private:
 
@@ -151,7 +151,7 @@ struct IntType
     IntType& multiply(int i);
     IntType& divide(int i);
 
-    operator int() { if(value) return *value; }
+    operator int() { return *value; }
 
 private:
 
