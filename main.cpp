@@ -259,20 +259,17 @@ void Point::toString()
 
 Point& Point::multiply(FloatType& f)
 {
-    multiply(static_cast<float>(f));
-    return *this;
+    return multiply(static_cast<float>(f));
 }
 
 Point& Point::multiply(DoubleType& d)
 {
-    multiply(static_cast<float>(d));
-    return *this;
+    return multiply(static_cast<float>(d));
 }
 
 Point& Point::multiply(IntType& i)
 {
-    multiply(static_cast<float>(i));
-    return *this;
+    return multiply(static_cast<float>(i));
 }
  
 // ===== pow() implementation - Float Type ==== //
