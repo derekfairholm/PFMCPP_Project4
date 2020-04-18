@@ -301,7 +301,7 @@ FloatType& FloatType::pow(const IntType& i)
 
 FloatType& FloatType::pow(const DoubleType& d)
 {
-    return powInternal(static_cast<double>(d));
+    return powInternal(static_cast<float>(d));
 }
 
 // ===== pow() implementation - Double Type ==== //
@@ -336,7 +336,7 @@ IntType& IntType::powInternal(const int i)
 {
     if(value)
     {
-        *value = std::pow(*value, i);
+        *value = static_cast<int>(std::pow(*value, i));
     }
     return *this;
 }
