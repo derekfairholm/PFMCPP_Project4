@@ -57,29 +57,37 @@ send me a DM to check your pull request
  Wait for my code review.
  */
 
+#include <iostream>
+#include <cmath>
+
+struct FloatType;
+struct DoubleType;
+struct IntType;
+
 struct Point
 {
+    Point(float x_, float y_) : x(x_), y(y_) {}
+
+    Point(const FloatType&);
+    Point(const DoubleType&);
+    Point(const IntType&);
+
     Point& multiply(float m)
     {
         x *= m;
         y *= m;
         return *this;
     }
+
+    Point& multiply(FloatType& f);
+    Point& multiply(DoubleType& d);
+    Point& multiply(IntType& i);
+
+    void toString();
+
 private:
     float x{0}, y{0};
 };
-
-
-
-
-
-
-
-#include <iostream>
-
-struct FloatType;
-struct DoubleType;
-struct IntType;
 
 struct FloatType
 {
@@ -91,17 +99,21 @@ struct FloatType
         value = nullptr;
     }
 
+    FloatType& pow(float f);
+    FloatType& pow(const FloatType& f);
+    FloatType& pow(const IntType& i);
+    FloatType& pow(const DoubleType& d);
+
     FloatType& add(float f);
     FloatType& subtract(float f);
     FloatType& multiply(float f);
     FloatType& divide(float f);
 
-    // Not sure how to handle the potential 'else' case here
-    operator float() { return *value; }
+    operator float() const { return *value; }
 
 private:
-
     float* value = nullptr;
+    FloatType& powInternal(const float f);
 };
 
 FloatType& FloatType::add(float f)
@@ -136,16 +148,21 @@ struct DoubleType
         value = nullptr;
     }
 
+    DoubleType& pow(double d);
+    DoubleType& pow(const DoubleType& d);
+    DoubleType& pow(const IntType& i);
+    DoubleType& pow(const FloatType& f);
+
     DoubleType& add(double d);
     DoubleType& subtract(double d);
     DoubleType& multiply(double d);
     DoubleType& divide(double d);
 
-    operator double() { return *value; }
+    operator double() const { return *value; }
 
 private:
-
     double* value = nullptr;
+    DoubleType& powInternal(const double d);
 };
 
 DoubleType& DoubleType::add(double d)
@@ -182,16 +199,21 @@ struct IntType
         value = nullptr;
     }
 
+    IntType& pow(int i);
+    IntType& pow(const IntType& i);
+    IntType& pow(const DoubleType& d);
+    IntType& pow(const FloatType& f);
+
     IntType& add(int i);
     IntType& subtract(int i);
     IntType& multiply(int i);
     IntType& divide(int i);
 
-    operator int() { return *value; }
+    operator int() const { return *value; }
 
 private:
-
     int* value = nullptr;
+    IntType& powInternal(const int i);
 };
 
 IntType& IntType::add(int i)
@@ -222,43 +244,172 @@ IntType& IntType::divide(int i)
     return *this;
 }
 
+// ===== Point Constructors ===== //
+
+Point::Point(const FloatType& f) : Point(f,f) {}
+Point::Point(const DoubleType& d) : Point(static_cast<float>(d),static_cast<float>(d)) {} 
+Point::Point(const IntType& i) : Point(static_cast<float>(i),static_cast<float>(i)) {}
+
+// ===== Point Member Function Implementations ===== //
+
+void Point::toString()
+{
+    std::cout << "x: " << x << " y: " << y << std::endl;
+}
+
+Point& Point::multiply(FloatType& f)
+{
+    return multiply(static_cast<float>(f));
+}
+
+Point& Point::multiply(DoubleType& d)
+{
+    return multiply(static_cast<float>(d));
+}
+
+Point& Point::multiply(IntType& i)
+{
+    return multiply(static_cast<float>(i));
+}
+ 
+// ===== pow() implementation - Float Type ==== //
+
+FloatType& FloatType::powInternal(const float f)
+{
+    if(value)
+    {
+        *value = std::pow(*value, f);
+    }
+    return *this;
+}
+
+FloatType& FloatType::pow(float f)
+{
+    return powInternal(f);
+}
+
+FloatType& FloatType::pow(const IntType& i)
+{
+    return powInternal(static_cast<float>(i));
+}
+
+FloatType& FloatType::pow(const DoubleType& d)
+{
+    return powInternal(static_cast<float>(d));
+}
+
+// ===== pow() implementation - Double Type ==== //
+
+DoubleType& DoubleType::powInternal(const double d)
+{
+    if(value)
+    {
+        *value = std::pow(*value, d);
+    }
+    return *this;
+}
+
+DoubleType& DoubleType::pow(double d)
+{
+    return powInternal(d);
+}
+
+DoubleType& DoubleType::pow(const IntType& i)
+{
+    return powInternal(static_cast<double>(i));
+}
+
+DoubleType& DoubleType::pow(const FloatType& f)
+{
+    return powInternal(static_cast<double>(f));
+}
+
+// ===== pow() implementation - Int Type ==== //
+
+IntType& IntType::powInternal(const int i)
+{
+    if(value)
+    {
+        *value = static_cast<int>(std::pow(*value, i));
+    }
+    return *this;
+}
+
+IntType& IntType::pow(int i)
+{
+    return powInternal(i);
+}
+
+IntType& IntType::pow(const DoubleType& d)
+{
+    return powInternal(static_cast<int>(d));
+}
+
+IntType& IntType::pow(const FloatType& f)
+{
+    return powInternal(static_cast<int>(f));
+}
+
+
+// ============================= //
+
 int main()
 {
     std::cout << std::endl;
     std::cout << "------------------------------Float Type------------------------------" << std::endl;
-    FloatType ft(3.1f);
-    IntType it(4);
-    DoubleType dt(8.2);
+    FloatType floatType(3.1f);
+    IntType intType(2);
+    DoubleType doubleType(3.1);
 
     std::cout << std::endl;
     
-    std::cout << "ft: multiplying by 5.f, adding 4.2f, subtracting dt, and dividing by it results in " << static_cast<float>(ft.multiply(5.f).add(4.2f).subtract(static_cast<float>(dt)).divide(it)) << std::endl;
+    std::cout << "ft: multiplying by 5.f, adding 4.2f, subtracting dt, and dividing by it results in " << static_cast<float>(floatType.multiply(5.f).add(4.2f).subtract(static_cast<float>(doubleType)).divide(intType)) << std::endl;
+
+    std::cout << "The above result to the power of intType, then to the power of doubleType: " << static_cast<float>(floatType.pow(intType).pow(doubleType)) << std::endl;
     
     std::cout << std::endl;
 
     std::cout << "------------------------------Double Type------------------------------" << std::endl;
-    DoubleType dt2(11.6);
-    FloatType ft2(5.f);
-    IntType it2(7);
+    DoubleType doubleType2(5.6);
+    FloatType floatType2(4.1f);
+    IntType intType2(3);
 
     std::cout << std::endl;
     
-    std::cout << "dt2: dividing by 2.1, multiplying by 9.4, addding ft2, and dividing by it2 results in  " <<  static_cast<double>(dt2.divide(2.1).multiply(9.4).add(static_cast<double>(ft2)).divide(it2)) << std::endl;
+    std::cout << "doubleType2: dividing by 2.1, multiplying by 9.4, addding floatType2, and dividing by intType2 results in  " <<  static_cast<double>(doubleType2.divide(2.1).multiply(9.4).add(static_cast<double>(floatType2)).divide(intType2)) << std::endl;
+
+    std::cout << "The above result to the power of floatType2, then to the power of intType2: " << static_cast<double>(doubleType2.pow(floatType2).pow(intType2)) << std::endl;
     
     std::cout << std::endl;
 
     std::cout << "------------------------------Int Type------------------------------" << std::endl;
-    IntType it3(85);
-    DoubleType dt3(52.43);
-    FloatType ft3(42.1f);
+    IntType intType3(14);
+    DoubleType doubleType3(5.43);
+    FloatType floatType3(1.1f);
 
     std::cout << std::endl;
-    std::cout << "it3: subtracting 5, dividing by 2, multiplying by dt3, and multiplying again by ft3 results in  " << static_cast<int>(it3.subtract(5).divide(2).multiply(static_cast<int>(dt3)).multiply(static_cast<int>(ft3))) << std::endl;
+    std::cout << "intType3: subtracting 5, dividing by 2, multiplying by doubleType3, and multiplying again by floatType3 results in:  " << static_cast<int>(intType3.subtract(5).divide(2).multiply(static_cast<int>(doubleType3)).multiply(static_cast<int>(floatType3))) << std::endl;
+
+    std::cout << "The above result to the power of doubleType3, then to the power of floatType3: " << static_cast<double>(intType3.pow(doubleType3).pow(floatType3)) << std::endl;
+
     std::cout << std::endl;
 
-    it.divide(0);
-    dt.divide(0);
-    ft.divide(0);
+    floatType.divide(0);
+    doubleType.divide(0);
+    intType.divide(0);
+
+    Point point(floatType2);
+    Point point2(doubleType2);
+    Point point3(intType2);
+
+    point.multiply(doubleType3);
+    point.toString();
+
+    point2.multiply(intType3);
+    point2.toString();
+
+    point3.multiply(floatType3);
+    point3.toString();
 
     std::cout << "good to go" << std::endl;
 }
