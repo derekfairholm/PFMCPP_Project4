@@ -79,11 +79,11 @@ struct Point
         return *this;
     }
 
-    void toString();
-
     Point& multiply(FloatType& f);
     Point& multiply(DoubleType& d);
     Point& multiply(IntType& i);
+
+    void toString();
 
 private:
     float x{0}, y{0};
@@ -246,9 +246,9 @@ IntType& IntType::divide(int i)
 
 // ===== Point Constructors ===== //
 
-Point::Point(const FloatType& f) : x(f), y(f) {}
-Point::Point(const DoubleType& d) : x(static_cast<float>(d)), y(static_cast<float>(d)) {}
-Point::Point(const IntType& i) : x(static_cast<float>(i)), y(static_cast<float>(i)) {}
+Point::Point(const FloatType& f) : Point(f,f) {}
+Point::Point(const DoubleType& d) : Point(static_cast<float>(d),static_cast<float>(d)) {} 
+Point::Point(const IntType& i) : Point(static_cast<float>(i),static_cast<float>(i)) {}
 
 // ===== Point Member Function Implementations ===== //
 
@@ -259,22 +259,19 @@ void Point::toString()
 
 Point& Point::multiply(FloatType& f)
 {
-    x *= f;
-    y *= f;
+    multiply(static_cast<float>(f));
     return *this;
 }
 
 Point& Point::multiply(DoubleType& d)
 {
-    x *= static_cast<float>(d);
-    y *= static_cast<float>(d);
+    multiply(static_cast<float>(d));
     return *this;
 }
 
 Point& Point::multiply(IntType& i)
 {
-    x *= static_cast<float>(i);
-    y *= static_cast<float>(i);
+    multiply(static_cast<float>(i));
     return *this;
 }
  
