@@ -1,4 +1,3 @@
-
 #include <iostream>
 /*
 Project 4: Part 5 / 9
@@ -89,9 +88,11 @@ struct Point
         return *this;
     }
 
-    Point& multiply(FloatType& f);
-    Point& multiply(DoubleType& d);
-    Point& multiply(IntType& i);
+    Point& operator*=(float m) { return multiply(m); }
+
+    Point& multiply(FloatType&);
+    Point& multiply(DoubleType&);
+    Point& multiply(IntType&);
 
     void toString();
 
@@ -114,10 +115,10 @@ struct FloatType
     FloatType& pow(const IntType& i);
     FloatType& pow(const DoubleType& d);
 
-    FloatType& add(float f);
-    FloatType& subtract(float f);
-    FloatType& multiply(float f);
-    FloatType& divide(float f);
+    FloatType& operator+=(float f);
+    FloatType& operator-=(float f);
+    FloatType& operator*=(float f);
+    FloatType& operator/=(float f);
 
     operator float() const { return *value; }
 
@@ -126,22 +127,22 @@ private:
     FloatType& powInternal(const float f);
 };
 
-FloatType& FloatType::add(float f)
+FloatType& FloatType::operator+=(float f)
 {
     *value += f;
     return *this;
 }
-FloatType& FloatType::subtract(float f)
+FloatType& FloatType::operator-=(float f)
 {
     *value -= f;
     return *this;
 }
-FloatType& FloatType::multiply(float f)
+FloatType& FloatType::operator*=(float f)
 {
     *value *= f;
     return *this;
 }
-FloatType& FloatType::divide(float f)
+FloatType& FloatType::operator/=(float f)
 {
     if(f == 0.0f) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
     *value /= f;
@@ -163,10 +164,10 @@ struct DoubleType
     DoubleType& pow(const IntType& i);
     DoubleType& pow(const FloatType& f);
 
-    DoubleType& add(double d);
-    DoubleType& subtract(double d);
-    DoubleType& multiply(double d);
-    DoubleType& divide(double d);
+    DoubleType& operator+=(double d);
+    DoubleType& operator-=(double d);
+    DoubleType& operator*=(double d);
+    DoubleType& operator/=(double d);
 
     operator double() const { return *value; }
 
@@ -175,25 +176,25 @@ private:
     DoubleType& powInternal(const double d);
 };
 
-DoubleType& DoubleType::add(double d)
+DoubleType& DoubleType::operator+=(double d)
 {
     *value += d;
     return *this;
 }
 
-DoubleType& DoubleType::subtract(double d)
+DoubleType& DoubleType::operator-=(double d)
 {
     *value -= d;
     return *this;
 }
 
-DoubleType& DoubleType::multiply(double d)
+DoubleType& DoubleType::operator*=(double d)
 {
     *value *= d;
     return *this;
 }
 
-DoubleType& DoubleType::divide(double d)
+DoubleType& DoubleType::operator/=(double d)
 {
     if(d == 0.0) { std::cout << "Warning: dividing by 0 results in undefined value!" << std::endl; }
     *value /= d;
@@ -214,10 +215,10 @@ struct IntType
     IntType& pow(const DoubleType& d);
     IntType& pow(const FloatType& f);
 
-    IntType& add(int i);
-    IntType& subtract(int i);
-    IntType& multiply(int i);
-    IntType& divide(int i);
+    IntType& operator+=(int i);
+    IntType& operator-=(int i);
+    IntType& operator*=(int i);
+    IntType& operator/=(int i);
 
     operator int() const { return *value; }
 
@@ -226,22 +227,22 @@ private:
     IntType& powInternal(const int i);
 };
 
-IntType& IntType::add(int i)
+IntType& IntType::operator+=(int i)
 {
     *value += i;
     return *this;
 }
-IntType& IntType::subtract(int i)
+IntType& IntType::operator-=(int i)
 {
     *value -= i;
     return *this;
 }
-IntType& IntType::multiply(int i)
+IntType& IntType::operator*=(int i)
 {
     *value *= i;
     return *this;
 }
-IntType& IntType::divide(int i)
+IntType& IntType::operator/=(int i)
 {
     if(i == 0)
     {
@@ -268,7 +269,7 @@ void Point::toString()
 }
 
 Point& Point::multiply(FloatType& f)
-{
+{ 
     return multiply(static_cast<float>(f));
 }
 
@@ -370,10 +371,15 @@ int main()
     FloatType floatType(3.1f);
     IntType intType(2);
     DoubleType doubleType(3.1);
+    
+    floatType *= 5.f;
+    floatType += 4.2f;
+    floatType -= static_cast<float>(doubleType);
+    floatType /= static_cast<float>(intType);
 
     std::cout << std::endl;
-    
-    std::cout << "ft: multiplying by 5.f, adding 4.2f, subtracting dt, and dividing by it results in " << static_cast<float>(floatType.multiply(5.f).add(4.2f).subtract(static_cast<float>(doubleType)).divide(intType)) << std::endl;
+
+    std::cout << "ft: multiplying by 5.f, adding 4.2f, subtracting dt, and dividing by it results in " << floatType << std::endl;
 
     std::cout << "The above result to the power of intType, then to the power of doubleType: " << static_cast<float>(floatType.pow(intType).pow(doubleType)) << std::endl;
     
@@ -384,9 +390,14 @@ int main()
     FloatType floatType2(4.1f);
     IntType intType2(3);
 
+    doubleType2 /= 2.1;
+    doubleType *= 9.4;
+    doubleType += static_cast<double>(floatType2);
+    doubleType /= static_cast<double>(intType2);
+
     std::cout << std::endl;
-    
-    std::cout << "doubleType2: dividing by 2.1, multiplying by 9.4, addding floatType2, and dividing by intType2 results in  " <<  static_cast<double>(doubleType2.divide(2.1).multiply(9.4).add(static_cast<double>(floatType2)).divide(intType2)) << std::endl;
+
+    std::cout << "doubleType2: dividing by 2.1, multiplying by 9.4, addding floatType2, and dividing by intType2 results in  " <<  doubleType << std::endl;
 
     std::cout << "The above result to the power of floatType2, then to the power of intType2: " << static_cast<double>(doubleType2.pow(floatType2).pow(intType2)) << std::endl;
     
@@ -397,16 +408,22 @@ int main()
     DoubleType doubleType3(5.43);
     FloatType floatType3(1.1f);
 
+    intType3 -= 5;
+    intType3 /= 2;
+    intType3 *= static_cast<int>(doubleType3);
+    intType3 *= static_cast<int>(floatType3);
+
     std::cout << std::endl;
-    std::cout << "intType3: subtracting 5, dividing by 2, multiplying by doubleType3, and multiplying again by floatType3 results in:  " << static_cast<int>(intType3.subtract(5).divide(2).multiply(static_cast<int>(doubleType3)).multiply(static_cast<int>(floatType3))) << std::endl;
+
+    std::cout << "intType3: subtracting 5, dividing by 2, multiplying by doubleType3, and multiplying again by floatType3 results in:  " << intType3 << std::endl;
 
     std::cout << "The above result to the power of doubleType3, then to the power of floatType3: " << static_cast<double>(intType3.pow(doubleType3).pow(floatType3)) << std::endl;
 
     std::cout << std::endl;
 
-    floatType.divide(0);
-    doubleType.divide(0);
-    intType.divide(0);
+    floatType /= 0;
+    doubleType /= 0;
+    intType /= 0;
 
     Point point(floatType2);
     Point point2(doubleType2);
