@@ -88,8 +88,6 @@ struct Point
         return *this;
     }
 
-    Point& operator*=(float m) { return multiply(m); }
-
     Point& multiply(FloatType&);
     Point& multiply(DoubleType&);
     Point& multiply(IntType&);
