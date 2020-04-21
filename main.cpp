@@ -89,8 +89,6 @@ private:
     float x{0}, y{0};
 };
 
-using FloatFunctionPtr = void(*)(float&);
-
 struct FloatType
 {
 
@@ -102,6 +100,8 @@ struct FloatType
     }
 
     FloatType& apply(std::function<FloatType&(float&)>);
+
+    using FloatFunctionPtr = void(*)(float&);
     FloatType& apply(FloatFunctionPtr);
 
     FloatType& pow(float f);
@@ -173,8 +173,6 @@ FloatType& FloatType::operator/=(float f)
     return *this;
 }
 
-using DoubleFunctionPtr = void(*)(double&);
-
 struct DoubleType
 {
 
@@ -186,6 +184,8 @@ struct DoubleType
     }
 
     DoubleType& apply(std::function<DoubleType&(double&)>);
+
+    using DoubleFunctionPtr = void(*)(double&);
     DoubleType& apply(DoubleFunctionPtr);
 
     DoubleType& pow(double d);
@@ -260,8 +260,6 @@ DoubleType& DoubleType::operator/=(double d)
     return *this;
 }
 
-using IntFunctionPtr = void(*)(int&);
-
 struct IntType
 {
     IntType(int i) : value(new int(i)) { }
@@ -272,6 +270,8 @@ struct IntType
     }
 
     IntType& apply(std::function<IntType&(int&)>);
+
+    using IntFunctionPtr = void(*)(int&);
     IntType& apply(IntFunctionPtr);
 
     IntType& pow(int i);
@@ -467,10 +467,10 @@ int main()
 
     // Float Type: Apply() passing a lambda
 
-    floatType.apply([&ft = floatType](float& f) -> FloatType&
+    floatType.apply([&floatType](float& f) -> FloatType&
     {
         f *= 8.f;
-        return ft;
+        return floatType;
     });
 
     std::cout << "floatType.apply() with lamba: " << floatType << std::endl;
@@ -501,10 +501,10 @@ int main()
 
     // Double Type: Apply() passing a lambda
 
-    doubleType2.apply([&dt = doubleType2](double& d) -> DoubleType& 
+    doubleType2.apply([&doubleType2](double& d) -> DoubleType& 
     {
         d *= 8.0;
-        return dt;
+        return doubleType2;
     });
 
     std::cout << "doubleType2.apply() with lamba: " << doubleType2 << std::endl;
@@ -535,10 +535,10 @@ int main()
 
     // Int Type: Apply() passing a lambda
 
-    intType3.apply([&it = intType3](int& i) -> IntType& 
+    intType3.apply([&intType3](int& i) -> IntType& 
     {
         i *= 8;
-        return it;
+        return intType3;
     });
 
     std::cout << "intType3.apply() with lamba: " << intType3 << std::endl;
