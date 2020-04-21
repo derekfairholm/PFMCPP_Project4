@@ -58,6 +58,7 @@ send me a DM to check your pull request
 
 #include <iostream>
 #include <cmath>
+#include <functional>
 
 struct FloatType;
 struct DoubleType;
@@ -98,6 +99,11 @@ struct FloatType
         value = nullptr;
     }
 
+    FloatType& apply(std::function<FloatType&(float&)>);
+
+    using FloatFunctionPtr = void(*)(float&);
+    FloatType& apply(FloatFunctionPtr);
+
     FloatType& pow(float f);
     FloatType& pow(const FloatType& f);
     FloatType& pow(const IntType& i);
@@ -114,6 +120,36 @@ private:
     float* value = nullptr;
     FloatType& powInternal(const float f);
 };
+
+// ====== Apply() implementation =========== //
+
+FloatType& FloatType::apply(std::function<FloatType&(float&)> floatFunc) 
+{
+    if(floatFunc)
+    {
+        return floatFunc(*value);
+    }
+    std::cout << "ERROR: nullptr passed as argument" << std::endl;
+    return *this;
+}
+
+FloatType& FloatType::apply(FloatFunctionPtr funcPtr) 
+{
+    if(funcPtr)
+    {
+        funcPtr(*value);
+    }
+    return *this;
+}
+
+// Free Function
+
+void freeFloatFunc(float& f)
+{
+    f *= 4.f;
+}
+
+// ========================================= //
 
 FloatType& FloatType::operator+=(float f)
 {
@@ -147,6 +183,11 @@ struct DoubleType
         value = nullptr;
     }
 
+    DoubleType& apply(std::function<DoubleType&(double&)>);
+
+    using DoubleFunctionPtr = void(*)(double&);
+    DoubleType& apply(DoubleFunctionPtr);
+
     DoubleType& pow(double d);
     DoubleType& pow(const DoubleType& d);
     DoubleType& pow(const IntType& i);
@@ -163,6 +204,36 @@ private:
     double* value = nullptr;
     DoubleType& powInternal(const double d);
 };
+
+// ====== Apply() implementation =========== //
+
+DoubleType& DoubleType::apply(std::function<DoubleType&(double&)> doubleFunc) 
+{
+    if(doubleFunc)
+    {
+        return doubleFunc(*value);
+    }
+    std::cout << "ERROR: nullptr passed as argument" << std::endl;
+    return *this;
+}
+
+DoubleType& DoubleType::apply(DoubleFunctionPtr funcPtr) 
+{
+    if(funcPtr)
+    {
+        funcPtr(*value);
+    }
+    return *this;
+}
+
+// Free Function
+
+void freeDoubleFunc(double& d)
+{
+    d *= 4.0;
+}
+
+// ========================================= //
 
 DoubleType& DoubleType::operator+=(double d)
 {
@@ -198,6 +269,11 @@ struct IntType
         value = nullptr;
     }
 
+    IntType& apply(std::function<IntType&(int&)>);
+
+    using IntFunctionPtr = void(*)(int&);
+    IntType& apply(IntFunctionPtr);
+
     IntType& pow(int i);
     IntType& pow(const IntType& i);
     IntType& pow(const DoubleType& d);
@@ -214,6 +290,36 @@ private:
     int* value = nullptr;
     IntType& powInternal(const int i);
 };
+
+// ====== Apply() implementation =========== //
+
+IntType& IntType::apply(std::function<IntType&(int&)> intFunc) 
+{
+    if(intFunc)
+    {
+        return intFunc(*value);
+    }
+    std::cout << "ERROR: nullptr passed as argument" << std::endl;
+    return *this;
+}
+
+IntType& IntType::apply(IntFunctionPtr funcPtr) 
+{
+    if(funcPtr)
+    {
+        funcPtr(*value);
+    }
+    return *this;
+}
+
+// Free Function
+
+void freeIntFunc(int& i)
+{
+    i *= 4;
+}
+
+// ========================================= //
 
 IntType& IntType::operator+=(int i)
 {
@@ -349,7 +455,6 @@ IntType& IntType::pow(const FloatType& f)
     return powInternal(static_cast<int>(f));
 }
 
-
 // ============================= //
 
 int main()
@@ -359,7 +464,23 @@ int main()
     FloatType floatType(3.1f);
     IntType intType(2);
     DoubleType doubleType(3.1);
-    
+
+    // Float Type: Apply() passing a lambda
+
+    floatType.apply([&floatType](float& f) -> FloatType&
+    {
+        f *= 8.f;
+        return floatType;
+    });
+
+    std::cout << "floatType.apply() with lamba: " << floatType << std::endl;
+
+    // Float Type: Apply() passing a free function
+
+    floatType.apply(freeFloatFunc);
+
+    std::cout << "floatType.apply() with free function: " << floatType << std::endl;
+
     floatType *= 5.f;
     floatType += 4.2f;
     floatType -= static_cast<float>(doubleType);
@@ -378,6 +499,22 @@ int main()
     FloatType floatType2(4.1f);
     IntType intType2(3);
 
+    // Double Type: Apply() passing a lambda
+
+    doubleType2.apply([&doubleType2](double& d) -> DoubleType& 
+    {
+        d *= 8.0;
+        return doubleType2;
+    });
+
+    std::cout << "doubleType2.apply() with lamba: " << doubleType2 << std::endl;
+
+    // Double Type: Apply() passing a free function
+
+    doubleType2.apply(freeDoubleFunc);
+
+    std::cout << "doubleType2.apply() with free function: " << doubleType2 << std::endl;
+
     doubleType2 /= 2.1;
     doubleType *= 9.4;
     doubleType += static_cast<double>(floatType2);
@@ -395,6 +532,22 @@ int main()
     IntType intType3(14);
     DoubleType doubleType3(5.43);
     FloatType floatType3(1.1f);
+
+    // Int Type: Apply() passing a lambda
+
+    intType3.apply([&intType3](int& i) -> IntType& 
+    {
+        i *= 8;
+        return intType3;
+    });
+
+    std::cout << "intType3.apply() with lamba: " << intType3 << std::endl;
+
+    // Int Type: Apply() passing a free function
+
+    intType3.apply(freeIntFunc);
+
+    std::cout << "intType3.apply() with free function: " << intType3 << std::endl;
 
     intType3 -= 5;
     intType3 /= 2;
